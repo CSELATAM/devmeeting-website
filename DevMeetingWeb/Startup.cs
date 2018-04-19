@@ -21,6 +21,16 @@ namespace DevMeetingWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var vstsRepository = new Vsts.VstsRepository(
+                Configuration["VstsAccount"],
+                Configuration["VstsProject"],
+                Configuration["VstsToken"]
+                );
+
+            services.AddSingleton<Vsts.VstsRepository>(vstsRepository);
+
+            services.AddTransient<Logic.MeetingManager>();
+
             services.AddMvc();
         }
 
