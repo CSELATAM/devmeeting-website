@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DevMeetingWeb.Vsts;
+using Microsoft.Extensions.Options;
 
 namespace DevMeetingWeb.Logic
 {
@@ -22,8 +23,10 @@ namespace DevMeetingWeb.Logic
             "CSEngineering.ActivityDuration"
         };
 
-        public MeetingManager(VstsRepository vs, MeetingManagerOptions options)
+        public MeetingManager(VstsRepository vs, IOptions<MeetingManagerOptions> config)
         {
+            var options = config.Value;
+
             if (options.ProjectId <= 0)
                 throw new InvalidOperationException("invalid project Id");
 

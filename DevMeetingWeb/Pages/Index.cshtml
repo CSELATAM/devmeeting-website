@@ -67,11 +67,12 @@
     </a>
 </div>
 <div class="row">
-    <h1 class="col-xs-12">DevMeeting List</h1>
+    <h1 class="col-xs-12">Calendário</h1>
     @{ 
         foreach(var meet in Model.MeetingList)
         {
-            <p class="col-xs-12">@meet.Title</p>
+            <p class="col-xs-1">@meet.StartDate?.ToString("dd/MM")</p>
+            <p class="col-xs-11">@meet.Title</p>
         }
     }
 </div>

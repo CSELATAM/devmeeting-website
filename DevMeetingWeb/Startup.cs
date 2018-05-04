@@ -28,12 +28,8 @@ namespace DevMeetingWeb
                 Configuration["VstsToken"]
                 );
 
-            services.AddSingleton<Logic.MeetingManagerOptions>(s => {
-                var meetingOptions = new MeetingManagerOptions();
-                Configuration.Bind("MeetingManager", meetingOptions);
-                return meetingOptions;
-            });
-
+            services.Configure<MeetingManagerOptions>(Configuration.GetSection("MeetingManager"));
+            
             services.AddSingleton<Vsts.VstsRepository>(vstsRepository);
 
             services.AddTransient<Logic.MeetingManager>();
