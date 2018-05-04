@@ -17,14 +17,18 @@ namespace DevMeetingWeb.Logic
             "System.Id",
             "System.Title",
             "System.State",
-            "System.AssignedTo"
-            //"CSEngineering.ActivityStartDate",
-            //"CSEngineering.ActivityDuration"
+            "System.AssignedTo",
+            "CSEngineering.ActivityStartDate",
+            "CSEngineering.ActivityDuration"
         };
 
-        public MeetingManager(VstsRepository vs)
+        public MeetingManager(VstsRepository vs, MeetingManagerOptions options)
         {
+            if (options.ProjectId <= 0)
+                throw new InvalidOperationException("invalid project Id");
+
             this._vs = vs;
+            this._devMeetingProjectId = options.ProjectId;
         }
 
         public async Task<Meeting[]> ListMeetingsAsync()

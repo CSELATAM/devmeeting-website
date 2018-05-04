@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevMeetingWeb.Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,12 @@ namespace DevMeetingWeb
                 Configuration["VstsProject"],
                 Configuration["VstsToken"]
                 );
+
+            services.AddSingleton<Logic.MeetingManagerOptions>(s => {
+                var meetingOptions = new MeetingManagerOptions();
+                Configuration.Bind("MeetingManager", meetingOptions);
+                return meetingOptions;
+            });
 
             services.AddSingleton<Vsts.VstsRepository>(vstsRepository);
 
