@@ -7,11 +7,16 @@ namespace DevMeetingWeb.Models
 {
     public class Meeting
     {
-        public readonly string Title;
+        public readonly int Id;
+        public string Title { get; set; }
+        public string AssignedTo { get; set; }
+        public string State { get; set; }
+        public DateTime? StartDate { get; set; }
+        public float? Duration { get; set; }
 
-        public Meeting(string title)
+        public Meeting(int id)
         {
-            Title = title;
+            this.Id = id;
         }
     }
 }

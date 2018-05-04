@@ -67,10 +67,11 @@
     </a>
 </div>
 <div class="row">
+    <h1 class="col-xs-12">DevMeeting List</h1>
     @{ 
         foreach(var meet in Model.MeetingList)
         {
-            <p>@meet.Title</p>
+            <p class="col-xs-12">@meet.Title</p>
         }
     }
 </div>
