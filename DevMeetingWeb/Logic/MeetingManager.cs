@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevMeetingWeb.Vsts;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.Services.WebApi;
 
 namespace DevMeetingWeb.Logic
 {
@@ -37,15 +38,34 @@ namespace DevMeetingWeb.Logic
         public async Task<Meeting[]> ListMeetingsAsync()
         {
             var childTasks = await _vs.ListChildItemsAsync(_devMeetingProjectId, _taskFields);
-
+            
             return childTasks.Select(t => new Meeting(t.Id)
             {
                 Title = (string)t.Get("System.Title"),
-                AssignedTo = (string)t.Get("System.AssignedTo"),
+                AssignedTo = CreateUserFrom(t.Get("System.AssignedTo")),
                 State = (string)t.Get("System.State"),
                 StartDate = (DateTime?)t.Get("CSEngineering.ActivityStartDate"),
                 Duration = (float?)(double?)t.Get("CSEngineering.ActivityDuration")                
             }).ToArray();
+        }
+
+        User CreateUserFrom(object objUser)
+        {
+            if( objUser is String username )
+            {
+                return new User(username);
+            }
+
+            if( objUser is IdentityRef vstsUser )
+            {
+                return new User(vstsUser.UniqueName)
+                {
+                    DisplayName = vstsUser.DisplayName,
+                    ImageUrl = vstsUser.ImageUrl
+                };
+            }
+
+            throw new InvalidCastException("objUser is not String | IdentityRef");
         }
     }
 }

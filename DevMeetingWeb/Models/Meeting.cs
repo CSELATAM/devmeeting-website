@@ -9,7 +9,7 @@ namespace DevMeetingWeb.Models
     {
         public readonly int Id;
         public string Title { get; set; }
-        public string AssignedTo { get; set; }
+        public User AssignedTo { get; set; }
         public string State { get; set; }
         public DateTime? StartDate { get; set; }
         public float? Duration { get; set; }
